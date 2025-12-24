@@ -1,32 +1,42 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
-import { testimonials } from '@/data/testimonials';
+
+const testimonial = {
+    quote: 'Rollout in Stunden, nicht in Wochen. Weil absentify für Microsoft 365 entwickelt wurde, hat einfach alles sofort gepasst',
+    quoteHighlight: ' – von der Kalendersynchronisation bis zur Vertreterregelung. Sogar unser IT-Team war beeindruckt.',
+    author: 'Frank Köllisch',
+    role: 'CEO',
+    avatar: '/images/frankkoellisch.avif',
+};
 
 const Testimonials: React.FC = () => {
     return (
-        <div className="grid gap-14 max-w-lg w-full mx-auto lg:gap-8 lg:grid-cols-3 lg:max-w-full">
-            {testimonials.map((testimonial, index) => (
-                <div
-                    key={index}
-                    className=""
-                >
-                    <div className="flex items-center mb-4 w-full justify-center lg:justify-start">
-                        <Image
-                            src={testimonial.avatar}
-                            alt={`${testimonial.name} avatar`}
-                            width={50}
-                            height={50}
-                            className="rounded-full shadow-md"
-                        />
-                        <div className="ml-4">
-                            <h3 className="text-lg font-semibold text-secondary">{testimonial.name}</h3>
-                            <p className="text-sm text-foreground-accent">{testimonial.role}</p>
-                        </div>
+        <section className="py-20 md:py-32 bg-white">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <blockquote>
+                    <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">
+                        <span className="text-gray-900">&ldquo;{testimonial.quote}</span>
+                        <span className="text-gray-400">{testimonial.quoteHighlight}&rdquo;</span>
+                    </p>
+                </blockquote>
+
+                <div className="mt-10 flex flex-col items-center">
+                    <Image
+                        src={testimonial.avatar}
+                        alt={testimonial.author}
+                        width={64}
+                        height={64}
+                        className="rounded-full"
+                    />
+                    <div className="mt-4">
+                        <div className="font-semibold text-gray-900">{testimonial.author}</div>
+                        <div className="text-gray-500">{testimonial.role}</div>
                     </div>
-                    <p className="text-foreground-accent text-center lg:text-left">&quot;{testimonial.message}&quot;</p>
                 </div>
-            ))}
-        </div>
+            </div>
+        </section>
     );
 };
 

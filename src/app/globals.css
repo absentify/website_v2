@@ -3,14 +3,30 @@
 @tailwind utilities;
 
 :root {
+  /* Core Colors - absentify Palette */
   --background: #ffffff;
-  --foreground: #171717;
-  --primary: #FED835;
-  --secondary: #304fff;
+  --foreground: #1f2a37;
+  --primary: #5D5BD4;
+  --primary-hover: #4845b0;
+  --secondary: #2563eb;
+  --accent: #079455;
 
-  --primary-accent: #e5c230;
-  --foreground-accent: #454545;
-  --hero-background: #F3F3F5;
+  /* Neutral Colors */
+  --muted: #f8fafc;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+
+  /* Card Colors */
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+
+  /* Legacy (für Kompatibilität) */
+  --primary-accent: #1d4ed8;
+  --foreground-accent: #64748b;
+  --hero-background: #f8fafc;
+
+  /* Nav Height */
+  --nav-height: 4rem;
 }
 
 html {
@@ -18,11 +34,11 @@ html {
 }
 
 body {
-  @apply text-lg;
-  
+  @apply text-base antialiased;
+
   color: var(--foreground);
   background: var(--background);
-  font-family: "Source Sans 3", sans-serif;
+  font-family: "Figtree", Arial, sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -33,22 +49,50 @@ body {
   }
 }
 
-.manrope {
-  font-family: "Manrope", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-
+/* Heading Font */
+.font-heading,
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Manrope", sans-serif;
+  font-family: "Figtree", Arial, sans-serif;
+  font-weight: 600;
   font-optical-sizing: auto;
   font-style: normal;
 }
 
-#logos svg {
-  @apply w-fit h-10 sm:h-12;
+/* Logo Marquee Styles */
+#logos svg,
+.logo-marquee svg,
+.logo-marquee img {
+  @apply w-auto h-8 sm:h-10 object-contain;
 }
 
+/* Section Spacing */
+.section-padding {
+  @apply py-16 md:py-24 lg:py-32;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+}
+
+/* Button Base Styles */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-hover;
+}
+
+.btn-secondary {
+  @apply bg-muted text-foreground hover:bg-border;
+}
+
+.btn-outline {
+  @apply border border-border bg-transparent text-foreground hover:bg-muted;
+}
+
+/* Legacy */
 .benefit-section:last-of-type > div {
   @apply mb-10;
 }
