@@ -7,21 +7,26 @@ import { Transition } from '@headlessui/react';
 import { HiOutlineXMark, HiBars3, HiChevronDown } from 'react-icons/hi2';
 
 import { menuItems, trustBarItems, INavItem } from '@/data/menuItems';
+import { useTrackingUrl } from '@/hooks/useTrackingUrl';
+
+const CheckIcon = () => (
+    <svg className="w-[16px] h-[16px] text-[#079455] flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+    </svg>
+);
 
 const TrustBar: React.FC = () => {
     return (
-        <div className="hidden lg:block bg-[#F7F7FD] py-[10px]">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between">
+        <div className="hidden lg:block bg-[#f9fafb] border-b border-[#f3f4f6]">
+            <div className="max-w-[1280px] mx-auto px-6">
+                <ul className="flex items-center justify-between py-[10px]">
                     {trustBarItems.map((item, index) => (
-                        <div key={index} className="flex items-center gap-2 text-[14px] font-medium text-[#1f2a37]">
-                            <svg className="w-[18px] h-[18px] text-[#079455]" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
+                        <li key={index} className="flex items-center gap-[6px] text-[14px] font-medium text-[#1f2a37]">
+                            <CheckIcon />
                             <span>{item.text}</span>
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
         </div>
     );
@@ -32,7 +37,7 @@ const NavDropdown: React.FC<{ item: INavItem; isOpen: boolean; onToggle: () => v
         <div className="relative">
             <button
                 onClick={onToggle}
-                className="flex items-center gap-1 text-[16px] font-semibold text-[#1f2a37] hover:text-[#5D5BD4] transition-colors"
+                className="flex items-center gap-1 text-[15px] font-medium text-[#1f2a37] hover:text-[#5D5BD4] transition-colors"
             >
                 {item.text}
                 <HiChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -70,6 +75,11 @@ const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
+    const desktopLogin = useTrackingUrl('https://app.absentify.com/login', 'header_login');
+    const desktopSignup = useTrackingUrl('https://app.absentify.com/create-account', 'header_signup');
+    const mobileLogin = useTrackingUrl('https://app.absentify.com/login', 'mobile_login');
+    const mobileSignup = useTrackingUrl('https://app.absentify.com/create-account', 'mobile_signup');
+
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -82,22 +92,22 @@ const Header: React.FC = () => {
         <header className="fixed top-0 left-0 right-0 z-50 bg-white">
             <TrustBar />
 
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-[1280px] mx-auto px-6">
                 <nav className="flex justify-between items-center h-[64px]">
                     {/* Logo */}
                     <Link href="/" className="flex items-center flex-shrink-0">
                         <Image
                             src="/images/absentify-logo.svg"
                             alt="absentify"
-                            width={140}
-                            height={28}
-                            className="h-[26px] w-auto"
+                            width={120}
+                            height={24}
+                            className="h-[24px] w-auto"
                             priority
                         />
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center gap-8">
+                    <div className="hidden lg:flex items-center gap-7">
                         {menuItems.map((item) => (
                             item.dropdown ? (
                                 <NavDropdown
@@ -110,7 +120,7 @@ const Header: React.FC = () => {
                                 <Link
                                     key={item.text}
                                     href={item.url}
-                                    className="text-[16px] font-semibold text-[#1f2a37] hover:text-[#5D5BD4] transition-colors"
+                                    className="text-[15px] font-medium text-[#1f2a37] hover:text-[#5D5BD4] transition-colors"
                                 >
                                     {item.text}
                                 </Link>
@@ -121,14 +131,16 @@ const Header: React.FC = () => {
                     {/* Desktop CTAs */}
                     <div className="hidden lg:flex items-center gap-3">
                         <Link
-                            href="https://app.absentify.com/login"
-                            className="px-3 py-2 text-[14px] font-medium text-[#384250] bg-white border border-[#D2D6DB] rounded-lg hover:bg-gray-50 transition-colors"
+                            href={desktopLogin.href}
+                            onClick={desktopLogin.onClick}
+                            className="px-[14px] py-[8px] text-[14px] font-medium text-[#384250] bg-white border border-[#D2D6DB] rounded-lg hover:bg-gray-50 transition-colors"
                         >
                             Einloggen
                         </Link>
                         <Link
-                            href="https://app.absentify.com/create-account"
-                            className="px-3 py-2 text-[14px] font-medium bg-[#5D5BD4] text-white rounded-lg hover:bg-[#4845b0] transition-colors"
+                            href={desktopSignup.href}
+                            onClick={desktopSignup.onClick}
+                            className="px-[14px] py-[8px] text-[14px] font-medium bg-[#5D5BD4] text-white rounded-lg hover:bg-[#4845b0] transition-colors"
                         >
                             Kostenfrei nutzen
                         </Link>
@@ -205,16 +217,16 @@ const Header: React.FC = () => {
 
                             <div className="pt-4 space-y-3 border-t border-gray-100">
                                 <Link
-                                    href="https://app.absentify.com"
+                                    href={mobileLogin.href}
                                     className="block w-full px-4 py-3 text-center text-gray-700 border border-gray-300 rounded-lg"
-                                    onClick={toggleMobileMenu}
+                                    onClick={() => { mobileLogin.onClick(); toggleMobileMenu(); }}
                                 >
                                     Einloggen
                                 </Link>
                                 <Link
-                                    href="https://app.absentify.com"
+                                    href={mobileSignup.href}
                                     className="block w-full px-4 py-3 text-center bg-primary text-white rounded-lg"
-                                    onClick={toggleMobileMenu}
+                                    onClick={() => { mobileSignup.onClick(); toggleMobileMenu(); }}
                                 >
                                     Kostenfrei nutzen
                                 </Link>

@@ -4,6 +4,7 @@ import { Figtree } from "next/font/google";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TrackingProvider from "@/components/TrackingProvider";
 import { siteDetails } from '@/data/siteDetails';
 
 import "./globals.css";
@@ -49,6 +50,7 @@ export default function RootLayout({
         className={`${figtree.className} antialiased`}
       >
         {siteDetails.googleAnalyticsId && <GoogleAnalytics gaId={siteDetails.googleAnalyticsId} />}
+        <TrackingProvider />
         <Header />
         <main>
           {children}

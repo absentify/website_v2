@@ -4,7 +4,7 @@ export const heroDetails = {
     centerImageSrc: '/images/hero-screen-de.avif',
     primaryCTA: {
         text: 'Jetzt kostenfrei nutzen',
-        url: 'https://app.absentify.com'
+        url: 'https://app.absentify.com/create-account'
     },
     secondaryCTA: {
         text: 'Mehr erfahren',

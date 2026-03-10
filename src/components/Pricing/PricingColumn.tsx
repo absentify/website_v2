@@ -1,7 +1,11 @@
+'use client';
+
 import clsx from "clsx";
+import Link from "next/link";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import { IPricing } from "@/types";
+import { useTrackingUrl } from "@/hooks/useTrackingUrl";
 
 interface Props {
     tier: IPricing;
@@ -10,6 +14,8 @@ interface Props {
 
 const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
     const { name, price, features } = tier;
+    const planSlug = name.toLowerCase().replace(/\s+/g, '_');
+    const cta = useTrackingUrl('https://app.absentify.com/create-account', `pricing_${planSlug}`);
 
     return (
         <div className={clsx("w-full max-w-sm mx-auto bg-white rounded-xl border border-gray-200 lg:max-w-full", { "shadow-lg": highlight })}>
@@ -21,9 +27,13 @@ const PricingColumn: React.FC<Props> = ({ tier, highlight }: Props) => {
                     </span>
                     {typeof price === 'number' && <span className="text-lg font-normal text-gray-600">/mo</span>}
                 </p>
-                <button className={clsx("w-full py-3 px-4 rounded-full transition-colors", { "bg-primary hover:bg-primary-accent": highlight, "bg-hero-background hover:bg-gray-200": !highlight })}>
+                <Link
+                    href={cta.href}
+                    onClick={cta.onClick}
+                    className={clsx("block w-full py-3 px-4 rounded-full transition-colors text-center", { "bg-primary hover:bg-primary-accent text-white": highlight, "bg-hero-background hover:bg-gray-200": !highlight })}
+                >
                     Get Started
-                </button>
+                </Link>
             </div>
             <div className="p-6 mt-1">
                 <p className="font-bold mb-0">FEATURES</p>
